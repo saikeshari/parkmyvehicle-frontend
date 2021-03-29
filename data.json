@@ -1,0 +1,130 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+       "type": "Point",
+        "coordinates": [77.2197924, 28.6313827]
+      },
+      "properties": {
+        "phoneFormatted": "9878364839",
+        "phone": "9878364839",
+        "address": "CP New Delhi Main circle",
+        "city": "Delhi",
+        "country": "India",
+        "crossStreet": "Connaught Place",
+        "postalCode": "110091",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2197924, 28.6413827]
+      },
+      "properties": {
+        "phoneFormatted": "9878214839",
+        "phone": "9878323839",
+        "address": "Paharganj Road",
+        "city": "Delhi",
+        "country": "India",
+        "crossStreet": "Paharganj",
+        "postalCode": "110091",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2145,28.6233]
+      },
+      "properties": {
+        "phoneFormatted": "011 – 23742795",
+        "phone": "011 – 23742795",
+        "address": "Ashoka Road, Sansad Marg, Crossing, New Delhi, Delhi 110001",
+        "city": "New Delhi",
+        "country": "India",
+        "crossStreet": "Patel Chowk Metro Station",
+        "postalCode": "110011",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2194,28.6330]
+      },
+      "properties": {
+        "phoneFormatted": "011 – 23742795",
+        "phone": "011 – 23742795",
+        "address": "Block F, Connaught Place, New Delhi, Delhi 110001",
+        "city": "New Delhi",
+        "country": "India",
+        "crossStreet": "Rajiv Chowk Metro Station",
+        "postalCode": "110011",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2410,28.6562]
+      },
+      "properties": {
+        "phoneFormatted": "011 – 23984795",
+        "phone": "011 – 23948795",
+        "address": "Netaji Subhash Marg, Lal Qila, Chandni Chowk",
+        "city": "New Delhi",
+        "country": "India",
+        "crossStreet": "Lal Qila Parking",
+        "postalCode": "110006",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2432,28.6379]
+      },
+      "properties": {
+        "phoneFormatted": "011 – 56984795",
+        "phone": "011 – 563948795",
+        "address": "Jawaharlal Nehru Marg, Feroze Shah Kotla, Raj Ghat",
+        "city": "New Delhi",
+        "country": "India",
+        "crossStreet": "Stadium Parking",
+        "postalCode": "110002",
+        "state": "New Delhi",
+        "Price":50,
+         "Slots":50,
+         "Car":10,
+         "Twowheeler":40
+      }
+    }
+  ]
+}
