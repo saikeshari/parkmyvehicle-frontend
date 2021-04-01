@@ -9,6 +9,7 @@ function Header() {
                 <Nav className="ml-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
                 <Nav.Link href="#features">Book</Nav.Link>
+                <Nav.Link href="/form">List Your Parking</Nav.Link>
                 <Nav.Link href="#pricing">Features</Nav.Link>
                 <Nav.Link href="#pricing">Profile</Nav.Link>
                 </Nav>

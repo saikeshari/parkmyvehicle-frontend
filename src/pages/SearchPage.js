@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import turf from '@turf/turf';
@@ -18,14 +18,20 @@ function SearchPage() {
       /**
        * Add the map to the page
        */
-      var map = new mapboxgl.Map({
-        container: "map",
+  var map;
+  const mapContainer = useRef();
+    useEffect(() => {
+       map = new mapboxgl.Map({
+        container: mapContainer.current,
         style: "mapbox://styles/mapbox/light-v10",
         center: [77.239624, 28.638396],
         zoom: 13,
         scrollZoom: false
-      });
-      
+       }, []);
+      console.log(map);
+      // return () => map.remove();
+}, []);
+  console.log(map);
       var stores = {
         type: "FeatureCollection",
         features: [
@@ -424,13 +430,13 @@ function SearchPage() {
       }
     return (
         <>
-            <div class="sidebar">
-            <div class="heading">
+            <div className="sidebar">
+            <div className="heading">
                 <h1>Our locations</h1>
             </div>
-            <div id="listings" class="listings"></div>
+            <div id="listings" className="listings"></div>
             </div>
-            <div id="map" class="map"></div>
+            <div id="map" className="map"></div>
         </>
     )
 }
