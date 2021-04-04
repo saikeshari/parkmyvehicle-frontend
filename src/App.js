@@ -6,6 +6,10 @@ import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "
 import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
 import Form from './components/Form';
+import Login from './auth/Login'
+import Register from './auth/Register'
+ import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 class App extends React.Component {
   constructor(props)
@@ -13,23 +17,19 @@ class App extends React.Component {
     super(props);
     this.state = { APIresponse:""};
   }
-  // callAPI()
-  // {
-  //   fetch("http://localhost:9000/users")
-  //     .then(res => res.text())
-  //     .then(res => this.setState({APIresponse: res}));
-  // }
-  // componentWillMount()
-  // {
-  //   this.callAPI();
-  // }
   render() {
     return(
     <div className="App">
-      <BrowserRouter>
-        <Switch>
+        <BrowserRouter>
+          <ToastContainer position="top-center"/>
+          <Switch>
           <Route exact path="/" component={Homepage} />
-            <Route exact path="/search" component={SearchPage} />
+            <Route path='/search' component={() => { 
+     window.location.href ="http://localhost:9000/search#"; 
+     return null;
+            }} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
             <Route exact path="/form" component={Form} />
         </Switch>
       </BrowserRouter>
