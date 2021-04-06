@@ -3,20 +3,20 @@ import './App.css';
 import React,{Component} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "react-router-dom";
+ import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+  
 import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
 import Form from './components/Form';
 import Login from './auth/Login'
 import Register from './auth/Register'
- import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./user/Dashboard";
+import DashboardSeller from './user/DashboardSeller'
+import NewParkings from './Parkings/NewParkings'
 
 class App extends React.Component {
-  constructor(props)
-  {
-    super(props);
-    this.state = { APIresponse:""};
-  }
   render() {
     return(
     <div className="App">
@@ -32,9 +32,11 @@ class App extends React.Component {
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/form" component={Form} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
+            <PrivateRoute exact path="/parkings/new" component={NewParkings} />
         </Switch>
       </BrowserRouter>
-      <p>{this.state.APIresponse}</p>
     </div>
   )};
 }
