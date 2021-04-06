@@ -4,17 +4,20 @@ import ReactDOM from 'react-dom';
 // import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import turf from '@turf/turf';
-import './searchPage.css'
+import distance from '@turf/distance';
+import './searchPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
+import { functionTypeAnnotation } from '@babel/types';
 
 // mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fpa2VzaGFyaSIsImEiOiJja2swdDYyanYwM3IwMm5xZjZlYm1kZmlsIn0.1ha1QjW98gYknER_3JqN6w';
 
 const SearchPage = () => {
   const mapContainer = useRef();
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
+  const [lng, setLng] = useState(77.2177);
+  const [lat, setLat] = useState(28.6304);
+  const [zoom, setZoom] = useState(12);
    
   useEffect(() => {
   const map = new mapboxgl.Map({
@@ -22,6 +25,13 @@ const SearchPage = () => {
   style: 'mapbox://styles/mapbox/streets-v11',
   center: [lng, lat],
   zoom: zoom
+  });
+
+  var geocoder = new MapboxGeocoder({	
+    accessToken: mapboxgl.accessToken,	
+    mapboxgl: mapboxgl,	
+    marker: true,	
+    bbox: [-180, -90, 180, 90]	
   });
    
   map.on('move', () => {
@@ -31,209 +41,135 @@ const SearchPage = () => {
   });
 
   var stores = {
-    'type': 'FeatureCollection',
-    'features': [
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.034084142948, 38.909671288923]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 234-7336',
-    'phone': '2022347336',
-    'address': '1471 P St NW',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'at 15th St NW',
-    'postalCode': '20005',
-    'state': 'D.C.'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.049766, 38.900772]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 507-8357',
-    'phone': '2025078357',
-    'address': '2221 I St NW',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'at 22nd St NW',
-    'postalCode': '20037',
-    'state': 'D.C.'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.043929, 38.910525]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 387-9338',
-    'phone': '2023879338',
-    'address': '1512 Connecticut Ave NW',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'at Dupont Circle',
-    'postalCode': '20036',
-    'state': 'D.C.'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.0672, 38.90516896]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 337-9338',
-    'phone': '2023379338',
-    'address': '3333 M St NW',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'at 34th St NW',
-    'postalCode': '20007',
-    'state': 'D.C.'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.002583742142, 38.887041080933]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 547-9338',
-    'phone': '2025479338',
-    'address': '221 Pennsylvania Ave SE',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'btwn 2nd & 3rd Sts. SE',
-    'postalCode': '20003',
-    'state': 'D.C.'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-76.933492720127, 38.99225245786]
-    },
-    'properties': {
-    'address': '8204 Baltimore Ave',
-    'city': 'College Park',
-    'country': 'United States',
-    'postalCode': '20740',
-    'state': 'MD'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.097083330154, 38.980979]
-    },
-    'properties': {
-    'phoneFormatted': '(301) 654-7336',
-    'phone': '3016547336',
-    'address': '4831 Bethesda Ave',
-    'cc': 'US',
-    'city': 'Bethesda',
-    'country': 'United States',
-    'postalCode': '20814',
-    'state': 'MD'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.359425054188, 38.958058116661]
-    },
-    'properties': {
-    'phoneFormatted': '(571) 203-0082',
-    'phone': '5712030082',
-    'address': '11935 Democracy Dr',
-    'city': 'Reston',
-    'country': 'United States',
-    'crossStreet': 'btw Explorer & Library',
-    'postalCode': '20190',
-    'state': 'VA'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.10853099823, 38.880100922392]
-    },
-    'properties': {
-    'phoneFormatted': '(703) 522-2016',
-    'phone': '7035222016',
-    'address': '4075 Wilson Blvd',
-    'city': 'Arlington',
-    'country': 'United States',
-    'crossStreet': 'at N Randolph St.',
-    'postalCode': '22203',
-    'state': 'VA'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-75.28784, 40.008008]
-    },
-    'properties': {
-    'phoneFormatted': '(610) 642-9400',
-    'phone': '6106429400',
-    'address': '68 Coulter Ave',
-    'city': 'Ardmore',
-    'country': 'United States',
-    'postalCode': '19003',
-    'state': 'PA'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-75.20121216774, 39.954030175164]
-    },
-    'properties': {
-    'phoneFormatted': '(215) 386-1365',
-    'phone': '2153861365',
-    'address': '3925 Walnut St',
-    'city': 'Philadelphia',
-    'country': 'United States',
-    'postalCode': '19104',
-    'state': 'PA'
-    }
-    },
-    {
-    'type': 'Feature',
-    'geometry': {
-    'type': 'Point',
-    'coordinates': [-77.043959498405, 38.903883387232]
-    },
-    'properties': {
-    'phoneFormatted': '(202) 331-3355',
-    'phone': '2023313355',
-    'address': '1901 L St. NW',
-    'city': 'Washington DC',
-    'country': 'United States',
-    'crossStreet': 'at 19th St',
-    'postalCode': '20036',
-    'state': 'D.C.'
-    }
-    }
+    "features": [
+      {
+        "type": "Feature",
+        "geometry": {
+         "type": "Point",
+          "coordinates": [77.2197924, 28.6313827]
+        },
+        "properties": {
+          "phoneFormatted": "9878364839",
+          "phone": "9878364839",
+          "address": "CP New Delhi Main circle",
+          "city": "Delhi",
+          "country": "India",
+          "crossStreet": "Connaught Place",
+          "postalCode": "110091",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.2197924, 28.6413827]
+        },
+        "properties": {
+          "phoneFormatted": "9878214839",
+          "phone": "9878323839",
+          "address": "Paharganj Road",
+          "city": "Delhi",
+          "country": "India",
+          "crossStreet": "Paharganj",
+          "postalCode": "110091",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.2145,28.6233]
+        },
+        "properties": {
+          "phoneFormatted": "011 – 23742795",
+          "phone": "011 – 23742795",
+          "address": "Ashoka Road, Sansad Marg, Crossing, New Delhi, Delhi 110001",
+          "city": "New Delhi",
+          "country": "India",
+          "crossStreet": "Patel Chowk Metro Station",
+          "postalCode": "110011",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.2194,28.6330]
+        },
+        "properties": {
+          "phoneFormatted": "011 – 23742795",
+          "phone": "011 – 23742795",
+          "address": "Block F, Connaught Place, New Delhi, Delhi 110001",
+          "city": "New Delhi",
+          "country": "India",
+          "crossStreet": "Rajiv Chowk Metro Station",
+          "postalCode": "110011",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.2410,28.6562]
+        },
+        "properties": {
+          "phoneFormatted": "011 – 23984795",
+          "phone": "011 – 23948795",
+          "address": "Netaji Subhash Marg, Lal Qila, Chandni Chowk",
+          "city": "New Delhi",
+          "country": "India",
+          "crossStreet": "Lal Qila Parking",
+          "postalCode": "110006",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      },
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [77.2432,28.6379]
+        },
+        "properties": {
+          "phoneFormatted": "011 – 56984795",
+          "phone": "011 – 563948795",
+          "address": "Jawaharlal Nehru Marg, Feroze Shah Kotla, Raj Ghat",
+          "city": "New Delhi",
+          "country": "India",
+          "crossStreet": "Stadium Parking",
+          "postalCode": "110002",
+          "state": "New Delhi",
+          "Price":50,
+           "Slots":50,
+           "Car":10,
+           "Twowheeler":40
+        }
+      }
     ]
-    };
+  };
      
     /**
     * Assign a unique id to each store. You'll use this `id`
@@ -263,8 +199,116 @@ const SearchPage = () => {
     * - The markers onto the map
     */
     buildLocationList(stores);
+    map.addControl(geocoder, 'top-left');
     addMarkers();
     });
+
+    /**	
+         * Listen for when a geocoder result is returned. When one is returned:	
+         * - Calculate distances	
+         * - Sort stores by distance	
+         * - Rebuild the listings	
+         * - Adjust the map camera	
+         * - Open a popup for the closest store	
+         * - Highlight the listing for the closest store.	
+         */	
+     geocoder.on('result', function (ev) {	
+      /* Get the coordinate of the search result */	
+      var searchResult = ev.result.geometry;	
+      /**	
+       * Calculate distances:	
+       * For each store, use turf.disance to calculate the distance	
+       * in miles between the searchResult and the store. Assign the	
+       * calculated value to a property called `distance`.	
+       */	
+      var options = { units: 'miles' };	
+      stores.features.forEach(function (store) {	
+        Object.defineProperty(store.properties, 'distance', {	
+          value: distance(searchResult, store.geometry, options),	
+          writable: true,	
+          enumerable: true,	
+          configurable: true	
+        });	
+      });	
+      /**	
+       * Sort stores by distance from closest to the `searchResult`	
+       * to furthest.	
+       */	
+      stores.features.sort(function (a, b) {	
+        if (a.properties.distance > b.properties.distance) {	
+          return 1;	
+        }	
+        if (a.properties.distance < b.properties.distance) {	
+          return -1;	
+        }	
+        return 0; // a must be equal to b	
+      });	
+      /**	
+       * Rebuild the listings:	
+       * Remove the existing listings and build the location	
+       * list again using the newly sorted stores.	
+       */	
+      var listings = document.getElementById('listings');	
+      while (listings.firstChild) {	
+        listings.removeChild(listings.firstChild);	
+      }	
+      buildLocationList(stores);	
+      /* Open a popup for the closest store. */	
+      createPopUp(stores.features[0]);	
+      /** Highlight the listing for the closest store. */	
+      var activeListing = document.getElementById(	
+        'listing-' + stores.features[0].properties.id	
+      );	
+      activeListing.classList.add('active');	
+      /**	
+       * Adjust the map camera:	
+       * Get a bbox that contains both the geocoder result and	
+       * the closest store. Fit the bounds to that bbox.	
+       */	
+      var bbox = getBbox(stores, 0, searchResult);	
+      map.fitBounds(bbox, {	
+        padding: 100	
+      });	
+    });	
+  /**	
+   * Using the coordinates (lng, lat) for	
+   * (1) the search result and	
+   * (2) the closest store	
+   * construct a bbox that will contain both points	
+   */	
+  function getBbox(sortedStores, storeIdentifier, searchResult) {	
+    var lats = [	
+      sortedStores.features[storeIdentifier].geometry.coordinates[1],	
+      searchResult.coordinates[1]	
+    ];	
+    var lons = [	
+      sortedStores.features[storeIdentifier].geometry.coordinates[0],	
+      searchResult.coordinates[0]	
+    ];	
+    var sortedLons = lons.sort(function (a, b) {	
+      if (a > b) {	
+        return 1;	
+      }	
+      if (a.distance < b.distance) {	
+        return -1;	
+      }	
+      return 0;	
+    });	
+    var sortedLats = lats.sort(function (a, b) {	
+      if (a > b) {	
+        return 1;	
+      }	
+      if (a.distance < b.distance) {	
+        return -1;	
+      }	
+      return 0;	
+    });	
+    return [	
+      [sortedLons[0], sortedLats[0]],	
+      [sortedLons[1], sortedLats[1]]	
+    ];	
+  }
+    
      
     /**
     * Add a marker to the map for every store listing.
@@ -344,6 +388,12 @@ const SearchPage = () => {
     if (prop.phone) {
     details.innerHTML += ' &middot; ' + prop.phoneFormatted;
     }
+
+    if (prop.distance) {	
+      var roundedDistance = Math.round(prop.distance * 100) / 100;	
+      details.innerHTML +=	
+        '<p><strong>' + roundedDistance + ' miles away</strong></p>';	
+    }
      
     /**
     * Listen to the element and when it is clicked, do four things:
@@ -396,19 +446,34 @@ const SearchPage = () => {
     )
     .addTo(map);
     }
+
+    // function resetCenter()
+    // {
+    //   map.setCenter([lng,lat]);
+    // }
+
+    
    
   return () => map.remove();
   }, []);
+
+  // const resetCenter = (e) =>
+  //   {
+  //     e.preventDefault();
+  //     map.flyTo()
+  //   }
+    
    
   return (
   <div>
     <div className="sidebar">
-<div className="heading">
-<h1>Our locations</h1>
-</div>
-<div id="listings" className="listings"></div>
-</div>
-<div id="map" ref={mapContainer} className="map"></div>
+      <div className="heading">
+        <h1>Our locations</h1>
+        </div>
+          <div id="listings" className="listings"></div>
+        </div>
+      <div id="map" ref={mapContainer} className="map"></div>
+      <FontAwesomeIcon icon={faRedoAlt} className="refreshIcon"/>
   </div>
   );
   };
