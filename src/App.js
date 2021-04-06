@@ -15,12 +15,14 @@ import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./user/Dashboard";
 import DashboardSeller from './user/DashboardSeller'
 import NewParkings from './Parkings/NewParkings'
+import Header from './components/Header'
 
 class App extends React.Component {
   render() {
     return(
     <div className="App">
         <BrowserRouter>
+          <Header/>
           <ToastContainer position="top-center"/>
           <Switch>
           <Route exact path="/" component={Homepage} />

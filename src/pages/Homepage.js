@@ -19,7 +19,6 @@ import City4Img from '../assets/images/City4Img.jpg';
 function Homepage() {
     return (
         <>
-        <Header/>
         <div className="LandingBanner">
             <div className="searchForm">
             <Form>

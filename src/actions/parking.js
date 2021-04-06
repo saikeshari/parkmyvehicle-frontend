@@ -6,3 +6,6 @@ export const createSpots = async (token, data) =>
       Authorization: `Bearer ${token}`,
     },
   });
+
+  export const allSpots = () =>
+axios.get(`${process.env.REACT_APP_API}/spots`);

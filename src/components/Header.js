@@ -19,23 +19,20 @@ function Header() {
     return (
         <>
             <Navbar bg="light" variant="light">
-                <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+                <Navbar.Brand href="/">Navbar</Navbar.Brand>
+                <Nav.Link href="/search">Book</Nav.Link>
                 <Nav className="ml-auto">
                     {auth != null && (
                         <>
-                            <Nav.Link href="#home">Home</Nav.Link>
+                            <Nav.Link href="/">Home</Nav.Link>
                             <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                             <Nav.Link href="/login" onClick={logout}>Logout</Nav.Link>
                             </>
                     )}
                     {auth == null && (
                         <>
-                <Nav.Link href="#features">Book</Nav.Link>
-                <Nav.Link href="/form">List Your Parking</Nav.Link>
-                <Nav.Link href="#pricing">Features</Nav.Link>
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/register">Register</Nav.Link>
-                <Nav.Link href="#pricing">Profile</Nav.Link>
                 </>            
                 )}
                 </Nav>

@@ -21,6 +21,8 @@ const NewParking = () => {
     title: "",
     content: "",
     image: "",
+    latitude: "",
+    longitude:"",
     price: "",
     from: "",
     to: "",
@@ -31,7 +33,7 @@ const NewParking = () => {
   );
   const [location, setLocation] = useState("");
   // destructuring variables from state
-  const { title, content, image, price, from, to, slots } = values;
+  const { title, content, image, price,latitude,longitude, from, to, slots } = values;
 
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -40,6 +42,8 @@ const NewParking = () => {
     spotData.append("content", content);
     spotData.append("location", location);
     spotData.append("price", price);
+    spotData.append("longitude", longitude);
+    spotData.append("latitude", latitude);
     image && spotData.append("image", image);
     spotData.append("from", from);
     spotData.append("to", to);
@@ -108,7 +112,22 @@ const NewParking = () => {
           onChange={({ suggestion }) => setLocation(suggestion)}
           style={{ height: "50px" }}
         />
-
+         <input
+          type="number"
+          name="latitude"
+          onChange={handleChange}
+          placeholder="Latitude Coordinates"
+          className="form-control m-2"
+          value={latitude}
+        />
+         <input
+          type="number"
+          name="longitude"
+          onChange={handleChange}
+          placeholder="Longitude Coordinates"
+          className="form-control m-2"
+          value={longitude}
+        />
         <input
           type="number"
           name="price"
@@ -171,6 +190,7 @@ const NewParking = () => {
               className="img img-fluid m-2"
             />
             <pre>{JSON.stringify(values, null, 4)}</pre>
+            <pre>{JSON.stringify(location.name, null, 4)}</pre>
           </div>
         </div>
       </div>
