@@ -24,11 +24,12 @@ class App extends React.Component {
           <ToastContainer position="top-center"/>
           <Switch>
           <Route exact path="/" component={Homepage} />
-            <Route path='/search' component={() => { 
+            {/* <Route path='/search' component={() => { 
      window.location.href ="http://localhost:9000/search#"; 
      return null;
-            }} />
+            }} /> */}
             <Route exact path="/login" component={Login} />
+            <Route exact path="/search" component={SearchPage} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/form" component={Form} />
         </Switch>
