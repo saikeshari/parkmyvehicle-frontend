@@ -8,4 +8,11 @@ export const createSpots = async (token, data) =>
   });
 
   export const allSpots = () =>
-axios.get(`${process.env.REACT_APP_API}/spots`);
+  axios.get(`${process.env.REACT_APP_API}/spots`);
+
+export const sellerSpots = async (token) =>
+  await axios.get(`${process.env.REACT_APP_API}/seller-spots`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
