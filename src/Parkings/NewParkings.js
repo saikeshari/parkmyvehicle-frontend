@@ -40,10 +40,10 @@ const NewParking = () => {
     let spotData = new FormData();
     spotData.append("title", title);
     spotData.append("content", content);
-    spotData.append("location", location);
+    spotData.append("location", location.name);
     spotData.append("price", price);
-    spotData.append("longitude", longitude);
-    spotData.append("latitude", latitude);
+    spotData.append("longitude", location.latlng.lng);
+    spotData.append("latitude", location.latlng.lat);
     image && spotData.append("image", image);
     spotData.append("from", from);
     spotData.append("to", to);
@@ -100,7 +100,7 @@ const NewParking = () => {
         <textarea
           name="content"
           onChange={handleChange}
-          placeholder="Content"
+          placeholder="Detailed Address"
           className="form-control m-2"
           value={content}
         />
@@ -111,22 +111,6 @@ const NewParking = () => {
           options={config}
           onChange={({ suggestion }) => setLocation(suggestion)}
           style={{ height: "50px" }}
-        />
-         <input
-          type="number"
-          name="latitude"
-          onChange={handleChange}
-          placeholder="Latitude Coordinates"
-          className="form-control m-2"
-          value={latitude}
-        />
-         <input
-          type="number"
-          name="longitude"
-          onChange={handleChange}
-          placeholder="Longitude Coordinates"
-          className="form-control m-2"
-          value={longitude}
         />
         <input
           type="number"
@@ -189,8 +173,8 @@ const NewParking = () => {
               alt="preview_image"
               className="img img-fluid m-2"
             />
-            <pre>{JSON.stringify(values, null, 4)}</pre>
-            <pre>{JSON.stringify(location.name, null, 4)}</pre>
+            {/* <pre>{JSON.stringify(values, null, 4)}</pre>
+            <pre>{JSON.stringify(location, null, 4)}</pre> */}
           </div>
         </div>
       </div>

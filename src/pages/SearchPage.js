@@ -30,7 +30,7 @@ const SearchPage = () => {
   useEffect(() => {
     console.log("USEEFEECT---------------")
     loadAllspots();
-  }, [])
+  }, [stores])
   
   useEffect(() => {
   const map = new mapboxgl.Map({
@@ -268,7 +268,7 @@ const SearchPage = () => {
     link.href = '#';
     link.className = 'title';
     link.id = 'link-' + prop.id;
-    link.innerHTML = prop.address;
+    link.innerHTML = prop.title;
      
     /* Add details to the individual listing. */
     var details = listing.appendChild(document.createElement('div'));
@@ -328,7 +328,7 @@ const SearchPage = () => {
     var popup = new mapboxgl.Popup({ closeOnClick: false })
     .setLngLat([currentFeature.longitude, currentFeature.latitude])
     .setHTML(
-    '<h3>Sweetgreen</h3>' +
+      '<h3>' + currentFeature.location+'</h3>' +
     '<h4>' +
     currentFeature.content+
     '</h4>'
@@ -344,7 +344,7 @@ const SearchPage = () => {
     
    
   return () => map.remove();
-  }, []);
+  },[]);
 
   // const resetCenter = (e) =>
   //   {
