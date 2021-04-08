@@ -418,7 +418,14 @@ const SearchPage = () => {
         </div>
       <div id="map" ref={mapContainer} className="map"></div>
       <FontAwesomeIcon icon={faRedoAlt} className="refreshIcon"/>
-      {DateOfBooking && parkingObj ? <><Button id="BookBtn" onClick={BookParking}>Book</Button></>:<></>}
+      {DateOfBooking && parkingObj ? <>
+      {parkingObj.slots < 0 ? <>
+      {() => {
+        alert("slots are full for this date");
+        setDateOfBooking("");
+      }}
+      </>:<><Button id="BookBtn" onClick={BookParking}>Book</Button></>}
+      </>:<></>}
       <DatePicker
         placeholder="From date"
         className="form-control m-2 datePickerBook"
