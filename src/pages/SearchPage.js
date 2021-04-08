@@ -10,6 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { functionTypeAnnotation } from '@babel/types';
 import { allSpots } from '../actions/parking'
+import axios from 'axios';
+import renderHTML from 'react-render-html';
+import {Button} from 'react-bootstrap'
+import { DatePicker } from "antd";
+import moment from "moment";
 
 // mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fpa2VzaGFyaSIsImEiOiJja2swdDYyanYwM3IwMm5xZjZlYm1kZmlsIn0.1ha1QjW98gYknER_3JqN6w';
@@ -21,6 +26,8 @@ const SearchPage = () => {
   const [lat, setLat] = useState(28.6304);
   const [zoom, setZoom] = useState(12);
    const [loading, setLoading] = useState(false);
+   const [parkingObj, setParkingObj] = useState();
+   const [DateOfBooking, setDateOfBooking] = useState();
 
   const loadAllspots = async () => {  
     let res = await allSpots();
@@ -28,6 +35,25 @@ const SearchPage = () => {
      setLoading(true);
   };
 
+  async function BookParkingAs(){
+    const spotsAv = await axios.post(`${process.env.REACT_APP_API}/bookParking`,{
+      params:{
+        "parkingObj":parkingObj,
+        "date":DateOfBooking
+      }
+    })
+  }
+
+  function BookParking(event){
+    event.preventDefault();
+    console.log("clicked");
+  }
+
+
+  useEffect(() => {
+    console.log(parkingObj);
+    console.log(DateOfBooking);
+  })
 // useEffect(() => {
 //     console.log("USEEFEECT---------------")
 //     loadAllspots();
@@ -35,6 +61,28 @@ const SearchPage = () => {
   
   useEffect(() => {
     loadAllspots();
+
+    // async function BookParking(){
+    //   const spotsAv = await axios.post(`${process.env.REACT_APP_API}/bookParking`,{
+    //     params:{
+    //       "parkingObj":parkingObj,
+    //       "date":DateOfBooking
+    //     }
+    //   })
+    // }
+
+    // async function getSpotsAvl(){
+    //   const res = await axios.get(`${process.env.REACT_APP_API}/spotsAvl`,{
+    //     params:{
+    //       "parkingObj":parkingObj,
+    //       "date":DateOfBooking
+    //     }
+    //   })
+    //   .then(
+    //     res.data > 0 ? BookParking() : alert("No slots available")
+    //   )
+    // }
+
   const map = new mapboxgl.Map({
   container: mapContainer.current,
   style: 'mapbox://styles/mapbox/streets-v11',
@@ -230,6 +278,7 @@ const SearchPage = () => {
     el.addEventListener('click', function (e) {
     /* Fly to the point */
     flyToStore(marker);
+    setParkingObj(marker);
     /* Close all other popups and display popup for clicked store */
     createPopUp(marker);
     /* Highlight listing in sidebar */
@@ -298,6 +347,7 @@ const SearchPage = () => {
     var clickedListing = data[i];
     flyToStore(clickedListing);
     createPopUp(clickedListing);
+    setParkingObj(clickedListing);
     }
     }
     var activeItem = document.getElementsByClassName('active');
@@ -330,6 +380,9 @@ const SearchPage = () => {
     var popup = new mapboxgl.Popup({ closeOnClick: false })
     .setLngLat([currentFeature.longitude, currentFeature.latitude])
     .setHTML(
+      // <>
+      //   <h3>sai</h3>
+      // </>
       '<h3>' + currentFeature.location+'</h3>' +
     '<h4>' +
     currentFeature.content+
@@ -365,6 +418,18 @@ const SearchPage = () => {
         </div>
       <div id="map" ref={mapContainer} className="map"></div>
       <FontAwesomeIcon icon={faRedoAlt} className="refreshIcon"/>
+      {DateOfBooking && parkingObj ? <><Button id="BookBtn" onClick={BookParking}>Book</Button></>:<></>}
+      <DatePicker
+        placeholder="From date"
+        className="form-control m-2 datePickerBook"
+        onChange={(date, dateString) =>
+          setDateOfBooking(dateString)
+        }
+        disabledDate={(current) =>
+          current && current.valueOf() < moment().subtract(1, "days")
+        }
+      />
+
   </div>
   );
   };
