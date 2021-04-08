@@ -20,19 +20,21 @@ const SearchPage = () => {
   const [lng, setLng] = useState(77.2177);
   const [lat, setLat] = useState(28.6304);
   const [zoom, setZoom] = useState(12);
-   
+   const [loading, setLoading] = useState(false);
 
   const loadAllspots = async () => {  
     let res = await allSpots();
     setSpots(res.data);
+     setLoading(true);
   };
 
-  useEffect(() => {
-    console.log("USEEFEECT---------------")
-    loadAllspots();
-  }, [stores])
+// useEffect(() => {
+//     console.log("USEEFEECT---------------")
+//     loadAllspots();
+// }, [loading])
   
   useEffect(() => {
+    loadAllspots();
   const map = new mapboxgl.Map({
   container: mapContainer.current,
   style: 'mapbox://styles/mapbox/streets-v11',
@@ -344,7 +346,7 @@ const SearchPage = () => {
     
    
   return () => map.remove();
-  },[]);
+  },[loading]);
 
   // const resetCenter = (e) =>
   //   {
