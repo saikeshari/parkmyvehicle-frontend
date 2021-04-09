@@ -16,3 +16,5 @@ export const sellerSpots = async (token) =>
       Authorization: `Bearer ${token}`,
     },
   });
+  export const searchListings = async (query) =>
+  await axios.post(`${process.env.REACT_APP_API}/search-listings`, query);

@@ -16,6 +16,7 @@ import DashboardSeller from './user/DashboardSeller'
 import NewParkings from './Parkings/NewParkings'
 import Header from './components/Header'
 import Footer from './components/Footer';
+import SearchResult from './Parkings/SearchResult'
 
 class App extends React.Component {
   render() {
@@ -37,6 +38,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />
+            <Route exact path="/search-result" component={SearchResult} />
         </Switch>
         <Footer/>
       </BrowserRouter>

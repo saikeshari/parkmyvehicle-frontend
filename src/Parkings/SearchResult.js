@@ -1,11 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
+import queryString from "query-string";
+import { Link } from "react-router-dom";
+import { searchListings } from "../actions/parking";
 import ReactDOM from 'react-dom';
 // import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 // import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import distance from '@turf/distance';
-import './searchPage.css';
+import '../pages/searchPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { functionTypeAnnotation } from '@babel/types';
@@ -21,65 +24,29 @@ import { useHistory } from 'react-router-dom'
 // mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fpa2VzaGFyaSIsImEiOiJja2swdDYyanYwM3IwMm5xZjZlYm1kZmlsIn0.1ha1QjW98gYknER_3JqN6w';
 
-const { RangePicker } = DatePicker;
-const { Option } = Select;
-
 const SearchPage = () => {
   const history = useHistory();  
   const mapContainer = useRef();
-  const [stores, setSpots] = useState([]);
   const [lng, setLng] = useState(77.2177);
   const [lat, setLat] = useState(28.6304);
   const [date, setDate] = useState("");
   const [zoom, setZoom] = useState(12);
    const [loading, setLoading] = useState(false);
    const [parkingObj, setParkingObj] = useState();
+    const [stores, setSpots] = useState([]);
 
-  const loadAllspots = async () => {  
-    let res = await allSpots();
-    setSpots(res.data);
-     setLoading(true);
+     const loadAllspots = () => {  
+    const { date } = queryString.parse(window.location.search);
+    // console.table({ location, date, bed });
+    searchListings({ date}).then((res) => {
+      console.log("SEARCH RESULTS ===>", res.data);
+        setSpots(res.data);
+         setLoading(true);
+    });
   };
-
-  const handleSubmit = () => {
-      history.push(`/search-result?date=${date}`)
-    console.log("clicked");
-  }
-
-
-  useEffect(() => {
-    // console.log(parkingObj);
-    console.log(date);
-  })
-// useEffect(() => {
-//     console.log("USEEFEECT---------------")
-//     loadAllspots();
-// }, [loading])
-  
-  useEffect(() => {
-    loadAllspots();
-
-    // async function BookParking(){
-    //   const spotsAv = await axios.post(`${process.env.REACT_APP_API}/bookParking`,{
-    //     params:{
-    //       "parkingObj":parkingObj,
-    //       "date":DateOfBooking
-    //     }
-    //   })
-    // }
-
-    // async function getSpotsAvl(){
-    //   const res = await axios.get(`${process.env.REACT_APP_API}/spotsAvl`,{
-    //     params:{
-    //       "parkingObj":parkingObj,
-    //       "date":DateOfBooking
-    //     }
-    //   })
-    //   .then(
-    //     res.data > 0 ? BookParking() : alert("No slots available")
-    //   )
-    // }
-
+    
+    useEffect(() => {
+        loadAllspots();
   const map = new mapboxgl.Map({
   container: mapContainer.current,
   style: 'mapbox://styles/mapbox/streets-v11',
@@ -133,7 +100,8 @@ const SearchPage = () => {
       {
           buildLocationList(stores);
         }
-    map.addControl(geocoder, 'top-left');
+        map.addControl(geocoder, 'top-left');
+        map.addControl(new mapboxgl.NavigationControl());
     addMarkers();
     });
 
@@ -414,7 +382,7 @@ const SearchPage = () => {
           <div id="listings" className="listings"></div>
         </div>
       <div id="map" ref={mapContainer} className="map"></div>
-      <div className="d-flex pb-4">
+      {/* <div className="d-flex pb-4">
       <RangePicker
         onChange={(value, dateString) => setDate(dateString)}
         disabledDate={(current) =>
@@ -433,9 +401,8 @@ const SearchPage = () => {
           style={{marginRight:540}}
         className="w-40"
         /> */}
-        </div>
   </div>
   );
   };
 
-export default SearchPage
+export default SearchPage;
