@@ -15,6 +15,7 @@ import City1Img from '../assets/images/City1Img.jpg';
 import City2Img from '../assets/images/City2Img.jpg';
 import City3Img from '../assets/images/City3Img.jpg';
 import City4Img from '../assets/images/City4Img.jpg';
+import Footer from '../components/Footer.js';
 
 function Homepage() {
     return (
@@ -153,6 +154,7 @@ function Homepage() {
                 </div>
             </Col>
         </Row>
+        
         </>
     )
 }

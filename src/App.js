@@ -5,7 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "react-router-dom";
  import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-  
 import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
 import Form from './components/Form';
@@ -16,6 +15,7 @@ import Dashboard from "./user/Dashboard";
 import DashboardSeller from './user/DashboardSeller'
 import NewParkings from './Parkings/NewParkings'
 import Header from './components/Header'
+import Footer from './components/Footer';
 
 class App extends React.Component {
   render() {
@@ -38,6 +38,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />
         </Switch>
+        <Footer/>
       </BrowserRouter>
     </div>
   )};

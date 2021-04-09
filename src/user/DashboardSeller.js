@@ -7,6 +7,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import { createConnectAccount } from "../actions/stripe";
 import { toast } from "react-toastify";
 import { sellerSpots } from '../actions/parking'
+import {Card,Button} from 'react-bootstrap'
 
 const DashboardSeller = () => {
   const { auth } = useSelector((state) => ({ ...state }));
@@ -46,7 +47,28 @@ useEffect(() => {
           </Link>
         </div>
       </div>
-      <div className="row"><pre>{JSON.stringify(Spots,null,4)}</pre></div>
+      {Spots ? 
+      Spots.map((Spot) => {
+        return(
+          <Card style={{ width: '18rem' }}>
+            {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+            <Card.Body>
+              <Card.Title>{Spot.title}</Card.Title>
+              <Card.Text>
+                {Spot.content}
+                <br/>
+                Posted By : {Spot.postedBy.name}
+                <br/>
+                Available slots : {Spot.slots}
+              </Card.Text>
+              <Button variant="primary">See More</Button>
+            </Card.Body>
+          </Card>
+        )
+      })
+      :<></>}
+      {console.log(Spots)}
+      {/* <div className="row"><pre>{JSON.stringify(Spots,null,4)}</pre></div> */}
     </div>
   );
 
