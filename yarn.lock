@@ -10071,6 +10071,13 @@
     "json-parse-even-better-errors" "^2.3.0"
     "lines-and-columns" "^1.1.6"
 
+"parse5@^3.0.2":
+  "integrity" "sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA=="
+  "resolved" "https://registry.npmjs.org/parse5/-/parse5-3.0.3.tgz"
+  "version" "3.0.3"
+  dependencies:
+    "@types/node" "*"
+
 "parse5@6.0.1":
   "integrity" "sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw=="
   "resolved" "https://registry.npmjs.org/parse5/-/parse5-6.0.1.tgz"
@@ -11181,7 +11188,7 @@
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.7.0.tgz"
   "version" "6.7.0"
 
-"query-string@^4.1.0":
+"query-string@^4.1.0", "query-string@^4.3.4":
   "integrity" "sha1-u7aTucqRXCMlFbIosaArYJBD2+s="
   "resolved" "https://registry.npmjs.org/query-string/-/query-string-4.3.4.tgz"
   "version" "4.3.4"
@@ -11644,6 +11651,11 @@
     "regenerator-runtime" "^0.13.7"
     "whatwg-fetch" "^3.4.1"
 
+"react-attr-converter@^0.3.1":
+  "integrity" "sha512-dSxo2Mn6Zx4HajeCeQNLefwEO4kNtV/0E682R1+ZTyFRPqxDa5zYb5qM/ocqw9Bxr/kFQO0IUiqdV7wdHw+Cdg=="
+  "resolved" "https://registry.npmjs.org/react-attr-converter/-/react-attr-converter-0.3.1.tgz"
+  "version" "0.3.1"
+
 "react-bootstrap@^1.5.2":
   "integrity" "sha512-mGKPY5+lLd7Vtkx2VFivoRkPT4xAHazuFfIhJLTEgHlDfIUSePn7qrmpZe5gXH9zvHV0RsBaQ9cLfXjxnZrOpA=="
   "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-1.5.2.tgz"
@@ -11784,6 +11796,14 @@
   "integrity" "sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg=="
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.8.3.tgz"
   "version" "0.8.3"
+
+"react-render-html@^0.6.0":
+  "integrity" "sha512-F9Xn8Iy2oJvepMdDrN+XUPOwqv3ni856ikuvu/dyJ2guozN01vF0C55Ja+CQfnziQNlLevSVXzuQKYa/mhyjAQ=="
+  "resolved" "https://registry.npmjs.org/react-render-html/-/react-render-html-0.6.0.tgz"
+  "version" "0.6.0"
+  dependencies:
+    "parse5" "^3.0.2"
+    "react-attr-converter" "^0.3.1"
 
 "react-router-dom@^5.2.0":
   "integrity" "sha512-gxAmfylo2QUjcwxI63RhQ5G85Qqt4voZpUXSEqCwykV0baaOTQDR1f0PmY8AELqIyVc0NEZUj0Gov5lNGcXgsA=="

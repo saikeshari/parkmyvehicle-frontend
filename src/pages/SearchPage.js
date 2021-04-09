@@ -10,24 +10,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRedoAlt } from '@fortawesome/free-solid-svg-icons'
 import { functionTypeAnnotation } from '@babel/types';
 import { allSpots } from '../actions/parking'
+import { SearchOutlined } from "@ant-design/icons";
 import axios from 'axios';
-import renderHTML from 'react-render-html';
+// import renderHTML from 'react-render-html';
 import {Button} from 'react-bootstrap'
-import { DatePicker } from "antd";
+import { DatePicker, Select } from "antd";
 import moment from "moment";
+import { useHistory } from 'react-router-dom'
 
 // mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2Fpa2VzaGFyaSIsImEiOiJja2swdDYyanYwM3IwMm5xZjZlYm1kZmlsIn0.1ha1QjW98gYknER_3JqN6w';
 
+const { RangePicker } = DatePicker;
+const { Option } = Select;
+
 const SearchPage = () => {
+  const history = useHistory();  
   const mapContainer = useRef();
   const [stores, setSpots] = useState([]);
   const [lng, setLng] = useState(77.2177);
   const [lat, setLat] = useState(28.6304);
+  const [date, setDate] = useState("");
   const [zoom, setZoom] = useState(12);
    const [loading, setLoading] = useState(false);
    const [parkingObj, setParkingObj] = useState();
-   const [DateOfBooking, setDateOfBooking] = useState();
 
   const loadAllspots = async () => {  
     let res = await allSpots();
@@ -35,24 +41,15 @@ const SearchPage = () => {
      setLoading(true);
   };
 
-  async function BookParkingAs(){
-    const spotsAv = await axios.post(`${process.env.REACT_APP_API}/bookParking`,{
-      params:{
-        "parkingObj":parkingObj,
-        "date":DateOfBooking
-      }
-    })
-  }
-
-  function BookParking(event){
-    event.preventDefault();
+  const handleSubmit = () => {
+      history.push(`/search-result?date=${date}`)
     console.log("clicked");
   }
 
 
   useEffect(() => {
-    console.log(parkingObj);
-    console.log(DateOfBooking);
+    // console.log(parkingObj);
+    console.log(date);
   })
 // useEffect(() => {
 //     console.log("USEEFEECT---------------")
@@ -417,26 +414,26 @@ const SearchPage = () => {
           <div id="listings" className="listings"></div>
         </div>
       <div id="map" ref={mapContainer} className="map"></div>
-      <FontAwesomeIcon icon={faRedoAlt} className="refreshIcon"/>
-      {DateOfBooking && parkingObj ? <>
-      {parkingObj.slots < 0 ? <>
-      {() => {
-        alert("slots are full for this date");
-        setDateOfBooking("");
-      }}
-      </>:<><Button id="BookBtn" onClick={BookParking}>Book</Button></>}
-      </>:<></>}
-      <DatePicker
-        placeholder="From date"
-        className="form-control m-2 datePickerBook"
-        onChange={(date, dateString) =>
-          setDateOfBooking(dateString)
-        }
+      <div className="d-flex pb-4">
+      <RangePicker
+        onChange={(value, dateString) => setDate(dateString)}
         disabledDate={(current) =>
           current && current.valueOf() < moment().subtract(1, "days")
         }
-      />
-
+          style={{marginLeft:540}}
+        className="w-40"
+        />
+        {<><Button id="BookBtn"
+          onClick={handleSubmit}
+          style={{marginRight:540,marginTop:35}}
+        >Search</Button></>}
+       {/* <SearchOutlined
+        onClick={handleSubmit}
+          className="btn btn-primary p-3 btn-square"
+          style={{marginRight:540}}
+        className="w-40"
+        /> */}
+        </div>
   </div>
   );
   };
