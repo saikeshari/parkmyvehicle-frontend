@@ -40,7 +40,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />
             <Route exact path="/search-result" component={SearchResult} />
         </Switch>
-        <Footer/>
+        {/* <Footer/> */}
       </BrowserRouter>
     </div>
   )};

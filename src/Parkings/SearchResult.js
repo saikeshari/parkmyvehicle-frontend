@@ -376,7 +376,8 @@ const SearchPage = () => {
   return (
   <div>
     <div className="sidebar">
-      <div className="heading">
+     <div className="heading">
+        <a href="/">HOME</a>
         <h1>Our locations</h1>
         </div>
           <div id="listings" className="listings"></div>

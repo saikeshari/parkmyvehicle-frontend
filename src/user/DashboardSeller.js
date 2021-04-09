@@ -53,6 +53,19 @@ useEffect(() => {
           <Card style={{ width: '18rem' }}>
             {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
             <Card.Body>
+               {Spot.image && Spot.image.contentType ? (
+              <img
+                src={`${process.env.REACT_APP_API}/spot/image/${Spot._id}`}
+                alt="default hotel image"
+                className="card-image img img-fluid"
+              />
+            ) : (
+              <img
+                src="https://via.placeholder.com/900x500.png?text=MERN+Booking"
+                alt="default hotel image"
+                className="card-image img img-fluid"
+              />
+            )}
               <Card.Title>{Spot.title}</Card.Title>
               <Card.Text>
                 {Spot.content}
