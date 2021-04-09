@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {Button,Row, Col, Form, InputGroup, FormControl} from 'react-bootstrap';
 import Header from '../components/Header.js';
 import './homepage.css'
@@ -15,28 +15,43 @@ import City1Img from '../assets/images/City1Img.jpg';
 import City2Img from '../assets/images/City2Img.jpg';
 import City3Img from '../assets/images/City3Img.jpg';
 import City4Img from '../assets/images/City4Img.jpg';
+import { DatePicker, Select } from "antd";
+import moment from "moment";
+import { useHistory } from 'react-router-dom'
+
+const { RangePicker } = DatePicker;
 
 function Homepage() {
+     const history = useHistory(); 
+    const [date, setDate] = useState("");
+      const handleSubmit = () => {
+      history.push(`/search-result?date=${date}`)
+    console.log("clicked");
+  }
+
     return (
         <>
         <div className="LandingBanner">
             <div className="searchForm">
             <Form>
                 <h1 style={{color:'white',fontSize:'3rem'}}>
-                        Book Your Parking
+                            Book Your Parking
                     </h1>
-                <Form.Row style={{marginLeft:'0',marginRight:'0',justifyContent:'center'}} className="align-items-center">
-                    <Col sm={6} className="my-1">
-                    <Form.Label htmlFor="inlineFormInputName" srOnly>
-                        Name
-                    </Form.Label>
-                    <Form.Control size={"lg"} id="inlineFormInputName" placeholder="Jane Doe" />
-                    </Col>
-                    <Col xs="auto" className="my-1">
-                    <Button size="lg" type="submit">Submit</Button>
-                    </Col>
-                </Form.Row>
-                </Form>
+                        <div className="d-flex pb-4">
+                    <RangePicker
+                        onChange={(value, dateString) => setDate(dateString)}
+                        disabledDate={(current) =>
+                        current && current.valueOf() < moment().subtract(1, "days")
+                        }
+                        style={{marginLeft:540}}
+                        className="w-40"
+                        />
+                        {<><Button id="BookBtn"
+                        onClick={handleSubmit}
+                        style={{marginRight:540,marginTop:360}}
+                            >Search</Button></>}
+                            </div>
+               </Form>
             </div>
         </div>
         <Row className="rowReactBoot">
