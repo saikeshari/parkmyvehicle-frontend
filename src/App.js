@@ -5,10 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "react-router-dom";
  import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
 import Details from './components/detailsPage';
-import Form from './components/Form';
 import Login from './auth/Login'
 import Register from './auth/Register'
 import PrivateRoute from "./components/PrivateRoute";
@@ -33,9 +31,7 @@ class App extends React.Component {
      return null;
             }} /> */}
             <Route exact path="/login" component={Login} />
-            <Route exact path="/search" component={SearchPage} />
             <Route exact path="/register" component={Register} />
-            <Route exact path="/form" component={Form} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />

@@ -20,7 +20,6 @@ function Header() {
         <>
             <Navbar bg="light" variant="light">
                 <Navbar.Brand href="/">Park My Vehicle</Navbar.Brand>
-                <Nav.Link href="/search">Book</Nav.Link>
                 <Nav className="ml-auto">
                     {auth != null && (
                         <>

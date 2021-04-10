@@ -36,7 +36,8 @@ const SearchPage = () => {
     const [stores, setSpots] = useState([]);
 
      const loadAllspots = () => {  
-    const { date } = queryString.parse(window.location.search);
+       const { date } = queryString.parse(window.location.search);
+       setDate(date);
     // console.table({ location, date, bed });
     searchListings({ date}).then((res) => {
       console.log("SEARCH RESULTS ===>", res.data);
@@ -46,9 +47,12 @@ const SearchPage = () => {
   };
 
   const handleSubmit = (e) => {
-    history.push('/details',{
+    history.push(`/details?date=${date}`,{
       parkingObj:parkingObj
-    })
+    });
+    // history.push('/details',{
+    //   parkingObj:parkingObj
+    // })
   }
 
   // useEffect(() => {
