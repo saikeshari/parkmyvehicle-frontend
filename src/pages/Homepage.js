@@ -25,7 +25,6 @@ function Homepage() {
 
     return (
         <>
-        <SmoothRender hidden={false} timing={1000}>
             <div className="LandingBanner">
                 <div className="searchForm">
                 <Form>
@@ -164,7 +163,6 @@ function Homepage() {
                 </Col>
             </Row>
             <Footer/>
-        </SmoothRender>
         </>
     )
 }

@@ -5,10 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "react-router-dom";
  import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
 import Details from './components/detailsPage';
-import Form from './components/Form';
 import Login from './auth/Login'
 import Register from './auth/Register'
 import PrivateRoute from "./components/PrivateRoute";
@@ -19,6 +17,8 @@ import Header from './components/Header'
 import Footer from './components/Footer';
 import SearchResult from './Parkings/SearchResult'
 import SignInPage from './pages/SignInPage'
+import SignUpPage from './pages/SignUpPage'
+import PaymentPage from './pages/PaymentPage';
 
 class App extends React.Component {
   render() {
@@ -34,12 +34,11 @@ class App extends React.Component {
      return null;
             }} /> */}
             <Route exact path="/login" component={SignInPage} />
-            <Route exact path="/search" component={SearchPage} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/form" component={Form} />
+            <Route exact path="/register" component={SignUpPage} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />
+            <PrivateRoute exact path="/payment" component={PaymentPage} />
             <Route exact path="/search-result" component={SearchResult} />
             <PrivateRoute exact path="/details" component={Details} />
         </Switch>
