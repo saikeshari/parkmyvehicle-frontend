@@ -13,26 +13,30 @@ import { toast } from "react-toastify";
 import { sellerSpots } from '../actions/parking'
 import {Card,Button} from 'react-bootstrap'
 
-const Details = () => {
+const Details = (props) => {
+  const [parkingObj, setParkingObj] = useState(props.location.state.parkingObj);
+  useEffect(() => {
+    console.log(props.location.state.parkingObj)
+  }, [])
     return (
       <Card style={{ width: '48rem' }}>
         <Card.Body>
 
         <Card.Title>
-            Parking Spot - 3
+            {parkingObj.title}
         </Card.Title>
         <Card.Text>
                 Posted By : Nidhi Kamewar
                 <br/>
-                Location : Sector-8 mansarovar
+                Location : {parkingObj.location}
                 <br/>
-                Price : 100
+                Price : {parkingObj.price}
                 <br/>
-                From : 2021-04-08T00:00:00.000Z
+                From : {parkingObj.from}
                 <br/>
-                To : 2021-04-09T00:00:00.000Z
+                To : {parkingObj.to}
                 <br/>
-                Slots : 10
+                Slots : {parkingObj.slots}
         </Card.Text>
               <Button variant="primary">Confirm Booking and Pay now</Button>
         </Card.Body>

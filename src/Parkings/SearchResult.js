@@ -44,6 +44,16 @@ const SearchPage = () => {
          setLoading(true);
     });
   };
+
+  const handleSubmit = (e) => {
+    history.push('/details',{
+      parkingObj:parkingObj
+    })
+  }
+
+  // useEffect(() => {
+  //   console.log(parkingObj);
+  // })
     
     useEffect(() => {
         loadAllspots();
@@ -242,6 +252,7 @@ const SearchPage = () => {
     **/
     el.addEventListener('click', function (e) {
     /* Fly to the point */
+    console.log(marker);
     flyToStore(marker);
     setParkingObj(marker);
     /* Close all other popups and display popup for clicked store */
@@ -283,7 +294,7 @@ const SearchPage = () => {
     var link = listing.appendChild(document.createElement('a'));
     link.href = '#';
     link.className = 'title';
-    link.id = 'link-' + prop.id;
+    link.id = 'link-' + i;
     link.innerHTML = prop.title;
      
     /* Add details to the individual listing. */
@@ -307,8 +318,9 @@ const SearchPage = () => {
     * 4. Highlight listing in sidebar (and remove highlight for all other listings)
     **/
     link.addEventListener('click', function (e) {
+      console.log(data);
     for (var i = 0; i < data.length; i++) {
-    if (this.id === 'link-' + data[i].id) {
+    if (this.id === 'link-' + i) {
     var clickedListing = data[i];
     flyToStore(clickedListing);
     createPopUp(clickedListing);
@@ -383,6 +395,9 @@ const SearchPage = () => {
           <div id="listings" className="listings"></div>
         </div>
       <div id="map" ref={mapContainer} className="map"></div>
+      {parkingObj ? <Button id="BookBtn"
+          onClick={handleSubmit}
+        >Book</Button>:<></>}
       {/* <div className="d-flex pb-4">
       <RangePicker
         onChange={(value, dateString) => setDate(dateString)}
