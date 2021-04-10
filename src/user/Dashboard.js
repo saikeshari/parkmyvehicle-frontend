@@ -1,6 +1,7 @@
 import DashboardNav from "../components/DashboardNav";
 import ConnectNav from "../components/ConnectNav";
 import { Link } from "react-router-dom";
+import Footer from '../components/Footer'
 
 const Dashboard = () => {
   return (
@@ -25,6 +26,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

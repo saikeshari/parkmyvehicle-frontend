@@ -1,6 +1,7 @@
 import React from 'react';
 import './Form.css'
 import axios from 'axios';
+import Footer from '../components/Footer'
 
 class Form extends React.Component
 {
@@ -134,8 +135,9 @@ class Form extends React.Component
                         </div>
                     </div>
                 </div>
-
+                <Footer/>
             </div>
+            
         )
     }
 };

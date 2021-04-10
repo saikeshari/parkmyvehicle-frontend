@@ -7,7 +7,8 @@ import { HomeOutlined } from "@ant-design/icons";
 import { createConnectAccount } from "../actions/stripe";
 import { toast } from "react-toastify";
 import { sellerSpots } from '../actions/parking'
-import {Card,Button} from 'react-bootstrap'
+import {Card,Button, Row, Col} from 'react-bootstrap'
+import Footer from '../components/Footer'
 
 const DashboardSeller = () => {
   const { auth } = useSelector((state) => ({ ...state }));
@@ -47,10 +48,12 @@ useEffect(() => {
           </Link>
         </div>
       </div>
+      <Row>
       {Spots ? 
       Spots.map((Spot) => {
         return(
-          <Card style={{ width: '18rem' }}>
+          <Col lg={3} md={3}>
+            <Card style={{ width: '18rem', minHeight:'355px' }}>
             {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
             <Card.Body>
                {Spot.image && Spot.image.contentType ? (
@@ -58,6 +61,7 @@ useEffect(() => {
                 src={`${process.env.REACT_APP_API}/spot/image/${Spot._id}`}
                 alt="default hotel image"
                 className="card-image img img-fluid"
+                style={{maxWidth:'222px', maxHeight:'124px'}}
               />
             ) : (
               <img
@@ -77,9 +81,11 @@ useEffect(() => {
               <Button variant="primary">See More</Button>
             </Card.Body>
           </Card>
+          </Col>
         )
       })
       :<></>}
+      </Row>
       {console.log(Spots)}
       {/* <div className="row"><pre>{JSON.stringify(Spots,null,4)}</pre></div> */}
     </div>
@@ -133,6 +139,7 @@ useEffect(() => {
         : connected()}
 
       {/* <pre>{JSON.stringify(auth, null, 4)}</pre> */}
+      <Footer/>
     </>
   );
 };

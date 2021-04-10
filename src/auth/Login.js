@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { login } from "../actions/auth";
 import LoginForm from "../components/LoginForm";
 import { useDispatch} from 'react-redux'
+import Footer from '../components/Footer'
 
 const Login = ({history}) => {
   const [email, setEmail] = useState("ryan@gmail.com");
@@ -50,6 +51,7 @@ const Login = ({history}) => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

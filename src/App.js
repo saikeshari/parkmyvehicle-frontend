@@ -18,6 +18,7 @@ import NewParkings from './Parkings/NewParkings'
 import Header from './components/Header'
 import Footer from './components/Footer';
 import SearchResult from './Parkings/SearchResult'
+import SignInPage from './pages/SignInPage'
 
 class App extends React.Component {
   render() {
@@ -32,7 +33,7 @@ class App extends React.Component {
      window.location.href ="http://localhost:9000/search#";
      return null;
             }} /> */}
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/login" component={SignInPage} />
             <Route exact path="/search" component={SearchPage} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/form" component={Form} />

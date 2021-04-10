@@ -3,6 +3,8 @@ import RegisterForm from "../components/RegisterForm";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { register } from "../actions/auth";
+import Footer from '../components/Footer'
+
 
 const Register = ({ history }) => {
   const [name, setName] = useState("");
@@ -47,6 +49,7 @@ const Register = ({ history }) => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };
