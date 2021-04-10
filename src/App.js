@@ -7,6 +7,7 @@ import { BrowserRouter, Switch, Route, useParams, state, Link, Redirect } from "
 import 'react-toastify/dist/ReactToastify.css';
 import SearchPage from './pages/SearchPage';
 import Homepage from './pages/Homepage';
+import Details from './components/detailsPage';
 import Form from './components/Form';
 import Login from './auth/Login'
 import Register from './auth/Register'
@@ -27,8 +28,8 @@ class App extends React.Component {
           <ToastContainer position="top-center"/>
           <Switch>
           <Route exact path="/" component={Homepage} />
-            {/* <Route path='/search' component={() => { 
-     window.location.href ="http://localhost:9000/search#"; 
+            {/* <Route path='/search' component={() => {
+     window.location.href ="http://localhost:9000/search#";
      return null;
             }} /> */}
             <Route exact path="/login" component={Login} />
@@ -39,6 +40,7 @@ class App extends React.Component {
             <PrivateRoute exact path="/dashboard/seller" component={DashboardSeller} />
             <PrivateRoute exact path="/parkings/new" component={NewParkings} />
             <Route exact path="/search-result" component={SearchResult} />
+            <PrivateRoute exact path="/details" component={Details} />
         </Switch>
         {/* <Footer/> */}
       </BrowserRouter>

@@ -25,7 +25,7 @@ const { RangePicker } = DatePicker;
 const { Option } = Select;
 
 const SearchPage = () => {
-  const history = useHistory();  
+  const history = useHistory();
   const mapContainer = useRef();
   const [stores, setSpots] = useState([]);
   const [lng, setLng] = useState(77.2177);
@@ -35,7 +35,7 @@ const SearchPage = () => {
    const [loading, setLoading] = useState(false);
    const [parkingObj, setParkingObj] = useState();
 
-  const loadAllspots = async () => {  
+  const loadAllspots = async () => {
     let res = await allSpots();
     setSpots(res.data);
      setLoading(true);
@@ -55,7 +55,7 @@ const SearchPage = () => {
 //     console.log("USEEFEECT---------------")
 //     loadAllspots();
 // }, [loading])
-  
+
   useEffect(() => {
     loadAllspots();
 
@@ -87,20 +87,20 @@ const SearchPage = () => {
   zoom: zoom
   });
 
-  var geocoder = new MapboxGeocoder({ 
-    accessToken: mapboxgl.accessToken,  
-    mapboxgl: mapboxgl, 
-    marker: true, 
-    bbox: [-180, -90, 180, 90]  
+  var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    marker: true,
+    bbox: [-180, -90, 180, 90]
   });
-   
+
   map.on('move', () => {
   setLng(map.getCenter().lng.toFixed(4));
   setLat(map.getCenter().lat.toFixed(4));
   setZoom(map.getZoom().toFixed(2));
   });
-    
-     
+
+
     /**
     * Assign a unique id to each store. You'll use this `id`
     * later to associate each point on the map with a listing
@@ -110,7 +110,7 @@ const SearchPage = () => {
     // stores.forEach(function (store, i) {
     // store.id = i;
     // });
-     
+
     /**
     * Wait until the map loads to make changes to the map.
     */
@@ -123,7 +123,7 @@ const SearchPage = () => {
     'type': 'geojson',
     'data': stores
     });
-     
+
     /**
     * Add all the things to the page:
     * - The location listings on the side of the page
@@ -137,114 +137,114 @@ const SearchPage = () => {
     addMarkers();
     });
 
-    /** 
-         * Listen for when a geocoder result is returned. When one is returned: 
-         * - Calculate distances  
-         * - Sort stores by distance  
-         * - Rebuild the listings 
-         * - Adjust the map camera  
-         * - Open a popup for the closest store 
-         * - Highlight the listing for the closest store. 
-         */ 
-     geocoder.on('result', function (ev) {  
-      /* Get the coordinate of the search result */ 
-      var searchResult = ev.result.geometry;  
-      /** 
-       * Calculate distances: 
-       * For each store, use turf.disance to calculate the distance 
-       * in kilometers between the searchResult and the store. Assign the  
-       * calculated value to a property called `distance`.  
-       */ 
-      var options = { units: 'kilometers' }; 
+    /**
+         * Listen for when a geocoder result is returned. When one is returned:
+         * - Calculate distances
+         * - Sort stores by distance
+         * - Rebuild the listings
+         * - Adjust the map camera
+         * - Open a popup for the closest store
+         * - Highlight the listing for the closest store.
+         */
+     geocoder.on('result', function (ev) {
+      /* Get the coordinate of the search result */
+      var searchResult = ev.result.geometry;
+      /**
+       * Calculate distances:
+       * For each store, use turf.disance to calculate the distance
+       * in kilometers between the searchResult and the store. Assign the
+       * calculated value to a property called `distance`.
+       */
+      var options = { units: 'kilometers' };
        stores.forEach(function (store) {
         var coordinates = [store.longitude, store.latitude];
         Object.defineProperty(store, 'distance', {
-          value: distance(searchResult, coordinates, options), 
-          writable: true, 
-          enumerable: true, 
-          configurable: true  
-        }); 
-      }); 
-      /** 
-       * Sort stores by distance from closest to the `searchResult` 
-       * to furthest. 
-       */ 
-      stores.sort(function (a, b) {  
-        if (a.distance > b.distance) {  
-          return 1; 
-        } 
-        if (a.distance < b.distance) {  
-          return -1;  
-        } 
-        return 0; // a must be equal to b 
-      }); 
-      /** 
-       * Rebuild the listings:  
-       * Remove the existing listings and build the location  
-       * list again using the newly sorted stores.  
-       */ 
-      var listings = document.getElementById('listings'); 
-      while (listings.firstChild) { 
-        listings.removeChild(listings.firstChild);  
-      } 
-      buildLocationList(stores);  
-      /* Open a popup for the closest store. */ 
-      createPopUp(stores[0]);  
-      /** Highlight the listing for the closest store. */ 
-      var activeListing = document.getElementById(  
-        'listing-' + stores[0].id 
-      );  
-      activeListing.classList.add('active');  
-      /** 
-       * Adjust the map camera: 
-       * Get a bbox that contains both the geocoder result and  
-       * the closest store. Fit the bounds to that bbox.  
-       */ 
-      var bbox = getBbox(stores, 0, searchResult);  
-      map.fitBounds(bbox, { 
-        padding: 100  
-      }); 
-    }); 
-  /** 
-   * Using the coordinates (lng, lat) for 
-   * (1) the search result and  
-   * (2) the closest store  
-   * construct a bbox that will contain both points 
-   */ 
-  function getBbox(sortedStores, storeIdentifier, searchResult) { 
-    var lats = [  
-      sortedStores[storeIdentifier].latitude, 
-      searchResult.coordinates[1] 
-    ];  
-    var lons = [  
-      sortedStores[storeIdentifier].longitude, 
-      searchResult.coordinates[0] 
-    ];  
-    var sortedLons = lons.sort(function (a, b) {  
-      if (a > b) {  
-        return 1; 
-      } 
-      if (a.distance < b.distance) {  
-        return -1;  
-      } 
-      return 0; 
-    }); 
-    var sortedLats = lats.sort(function (a, b) {  
-      if (a > b) {  
-        return 1; 
-      } 
-      if (a.distance < b.distance) {  
-        return -1;  
-      } 
-      return 0; 
-    }); 
-    return [  
-      [sortedLons[0], sortedLats[0]], 
-      [sortedLons[1], sortedLats[1]]  
-    ];  
+          value: distance(searchResult, coordinates, options),
+          writable: true,
+          enumerable: true,
+          configurable: true
+        });
+      });
+      /**
+       * Sort stores by distance from closest to the `searchResult`
+       * to furthest.
+       */
+      stores.sort(function (a, b) {
+        if (a.distance > b.distance) {
+          return 1;
+        }
+        if (a.distance < b.distance) {
+          return -1;
+        }
+        return 0; // a must be equal to b
+      });
+      /**
+       * Rebuild the listings:
+       * Remove the existing listings and build the location
+       * list again using the newly sorted stores.
+       */
+      var listings = document.getElementById('listings');
+      while (listings.firstChild) {
+        listings.removeChild(listings.firstChild);
+      }
+      buildLocationList(stores);
+      /* Open a popup for the closest store. */
+      createPopUp(stores[0]);
+      /** Highlight the listing for the closest store. */
+      var activeListing = document.getElementById(
+        'listing-' + stores[0].id
+      );
+      activeListing.classList.add('active');
+      /**
+       * Adjust the map camera:
+       * Get a bbox that contains both the geocoder result and
+       * the closest store. Fit the bounds to that bbox.
+       */
+      var bbox = getBbox(stores, 0, searchResult);
+      map.fitBounds(bbox, {
+        padding: 100
+      });
+    });
+  /**
+   * Using the coordinates (lng, lat) for
+   * (1) the search result and
+   * (2) the closest store
+   * construct a bbox that will contain both points
+   */
+  function getBbox(sortedStores, storeIdentifier, searchResult) {
+    var lats = [
+      sortedStores[storeIdentifier].latitude,
+      searchResult.coordinates[1]
+    ];
+    var lons = [
+      sortedStores[storeIdentifier].longitude,
+      searchResult.coordinates[0]
+    ];
+    var sortedLons = lons.sort(function (a, b) {
+      if (a > b) {
+        return 1;
+      }
+      if (a.distance < b.distance) {
+        return -1;
+      }
+      return 0;
+    });
+    var sortedLats = lats.sort(function (a, b) {
+      if (a > b) {
+        return 1;
+      }
+      if (a.distance < b.distance) {
+        return -1;
+      }
+      return 0;
+    });
+    return [
+      [sortedLons[0], sortedLats[0]],
+      [sortedLons[1], sortedLats[1]]
+    ];
   }
-    
-     
+
+
     /**
     * Add a marker to the map for every store listing.
     **/
@@ -257,7 +257,7 @@ const SearchPage = () => {
     el.id = 'marker-' + marker.id;
     /* Assign the `marker` class to each marker for styling. */
     el.className = 'marker';
-     
+
     /**
     * Create a marker using the div element
     * defined above and add it to the map.
@@ -265,7 +265,7 @@ const SearchPage = () => {
     new mapboxgl.Marker(el, { offset: [0, -23] })
     .setLngLat([marker.longitude,marker.latitude])
     .addTo(map);
-     
+
     /**
     * Listen to the element and when it is clicked, do three things:
     * 1. Fly to the point
@@ -291,7 +291,7 @@ const SearchPage = () => {
     });
     });
     }
-     
+
     /**
     * Add a listing for each store to the sidebar.
     **/
@@ -302,7 +302,7 @@ const SearchPage = () => {
     * which will be used several times below.
     **/
     var prop = store;
-     
+
     /* Add a new listing section to the sidebar. */
     var listings = document.getElementById('listings');
     var listing = listings.appendChild(document.createElement('div'));
@@ -310,14 +310,14 @@ const SearchPage = () => {
     listing.id = 'listing-' + prop.id;
     /* Assign the `item` class to each listing for styling. */
     listing.className = 'item';
-     
+
     /* Add the link to the individual listing created above. */
     var link = listing.appendChild(document.createElement('a'));
     link.href = '#';
     link.className = 'title';
     link.id = 'link-' + prop.id;
     link.innerHTML = prop.title;
-     
+
     /* Add details to the individual listing. */
     var details = listing.appendChild(document.createElement('div'));
     details.innerHTML = prop.city;
@@ -325,12 +325,12 @@ const SearchPage = () => {
     details.innerHTML += ' &middot; ' + prop.content;
     }
 
-    if (prop.distance) {  
-      var roundedDistance = Math.round(prop.distance * 100) / 100;  
-      details.innerHTML +=  
-        '<p><strong>' + roundedDistance + ' kilometers away</strong></p>'; 
+    if (prop.distance) {
+      var roundedDistance = Math.round(prop.distance * 100) / 100;
+      details.innerHTML +=
+        '<p><strong>' + roundedDistance + ' kilometers away</strong></p>';
     }
-     
+
     /**
     * Listen to the element and when it is clicked, do four things:
     * 1. Update the `currentFeature` to the store associated with the clicked link
@@ -355,7 +355,7 @@ const SearchPage = () => {
     });
     });
     }
-     
+
     /**
     * Use Mapbox GL JS's `flyTo` to move the camera smoothly
     * a given center point.
@@ -367,7 +367,7 @@ const SearchPage = () => {
     zoom: 12
     });
     }
-     
+
     /**
     * Create a Mapbox GL JS `Popup`.
     **/
@@ -383,7 +383,8 @@ const SearchPage = () => {
       '<h3>' + currentFeature.location+'</h3>' +
     '<h4>' +
     currentFeature.content+
-    '</h4>'
+    '</h4>' +
+    '<a href="/details">' + 'Book' + '</a>'
     )
     .addTo(map);
     }
@@ -393,8 +394,8 @@ const SearchPage = () => {
     //   map.setCenter([lng,lat]);
     // }
 
-    
-   
+
+
   return () => map.remove();
   },[loading]);
 
@@ -403,8 +404,8 @@ const SearchPage = () => {
   //     e.preventDefault();
   //     map.flyTo()
   //   }
-    
-   
+
+
   return (
   <div>
     <div className="sidebar">
