@@ -60,27 +60,27 @@ const SearchPage = () => {
   //   console.log(parkingObj);
   // })
 
-    useEffect(() => {
-        loadAllspots();
-  const map = new mapboxgl.Map({
-  container: mapContainer.current,
-  style: 'mapbox://styles/mapbox/streets-v11',
-  center: [lng, lat],
-  zoom: zoom
-  });
+  useEffect(() => {
+    loadAllspots();
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [lng, lat],
+      zoom: zoom
+    });
 
-  var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    marker: true,
-    bbox: [-180, -90, 180, 90]
-  });
+    var geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken,
+      mapboxgl: mapboxgl,
+      marker: true,
+      bbox: [-180, -90, 180, 90]
+    });
 
-  map.on('move', () => {
-  setLng(map.getCenter().lng.toFixed(4));
-  setLat(map.getCenter().lat.toFixed(4));
-  setZoom(map.getZoom().toFixed(2));
-  });
+    map.on('move', () => {
+      setLng(map.getCenter().lng.toFixed(4));
+      setLat(map.getCenter().lat.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
+    });
 
 
     /**
@@ -97,27 +97,26 @@ const SearchPage = () => {
     * Wait until the map loads to make changes to the map.
     */
     map.on('load', function (e) {
-    /**
-    * This is where your '.addLayer()' used to be, instead
-    * add only the source without styling a layer
-    */
-    map.addSource('places', {
-    'type': 'geojson',
-    'data': stores
-    });
+      /**
+      * This is where your '.addLayer()' used to be, instead
+      * add only the source without styling a layer
+      */
+      map.addSource('places', {
+        'type': 'geojson',
+        'data': stores
+      });
 
-    /**
-    * Add all the things to the page:
-    * - The location listings on the side of the page
-    * - The markers onto the map
-    */
-      if (stores)
-      {
-          buildLocationList(stores);
-        }
-        map.addControl(geocoder, 'top-left');
-        map.addControl(new mapboxgl.NavigationControl());
-    addMarkers();
+      /**
+      * Add all the things to the page:
+      * - The location listings on the side of the page
+      * - The markers onto the map
+      */
+      if (stores) {
+        buildLocationList(stores);
+      }
+      map.addControl(geocoder, 'top-left');
+      map.addControl(new mapboxgl.NavigationControl());
+      addMarkers();
     });
 
     /**
@@ -129,7 +128,7 @@ const SearchPage = () => {
          * - Open a popup for the closest store
          * - Highlight the listing for the closest store.
          */
-     geocoder.on('result', function (ev) {
+    geocoder.on('result', function (ev) {
       /* Get the coordinate of the search result */
       var searchResult = ev.result.geometry;
       /**
@@ -139,7 +138,7 @@ const SearchPage = () => {
        * calculated value to a property called `distance`.
        */
       var options = { units: 'kilometers' };
-       stores.forEach(function (store) {
+      stores.forEach(function (store) {
         var coordinates = [store.longitude, store.latitude];
         Object.defineProperty(store, 'distance', {
           value: distance(searchResult, coordinates, options),
@@ -188,94 +187,99 @@ const SearchPage = () => {
         padding: 100
       });
     });
-  /**
-   * Using the coordinates (lng, lat) for
-   * (1) the search result and
-   * (2) the closest store
-   * construct a bbox that will contain both points
-   */
-  function getBbox(sortedStores, storeIdentifier, searchResult) {
-    var lats = [
-      sortedStores[storeIdentifier].latitude,
-      searchResult.coordinates[1]
-    ];
-    var lons = [
-      sortedStores[storeIdentifier].longitude,
-      searchResult.coordinates[0]
-    ];
-    var sortedLons = lons.sort(function (a, b) {
-      if (a > b) {
-        return 1;
-      }
-      if (a.distance < b.distance) {
-        return -1;
-      }
-      return 0;
-    });
-    var sortedLats = lats.sort(function (a, b) {
-      if (a > b) {
-        return 1;
-      }
-      if (a.distance < b.distance) {
-        return -1;
-      }
-      return 0;
-    });
-    return [
-      [sortedLons[0], sortedLats[0]],
-      [sortedLons[1], sortedLats[1]]
-    ];
-  }
+    /**
+     * Using the coordinates (lng, lat) for
+     * (1) the search result and
+     * (2) the closest store
+     * construct a bbox that will contain both points
+     */
+    function getBbox(sortedStores, storeIdentifier, searchResult) {
+      var lats = [
+        sortedStores[storeIdentifier].latitude,
+        searchResult.coordinates[1]
+      ];
+      var lons = [
+        sortedStores[storeIdentifier].longitude,
+        searchResult.coordinates[0]
+      ];
+      var sortedLons = lons.sort(function (a, b) {
+        if (a > b) {
+          return 1;
+        }
+        if (a.distance < b.distance) {
+          return -1;
+        }
+        return 0;
+      });
+      var sortedLats = lats.sort(function (a, b) {
+        if (a > b) {
+          return 1;
+        }
+        if (a.distance < b.distance) {
+          return -1;
+        }
+        return 0;
+      });
+      return [
+        [sortedLons[0], sortedLats[0]],
+        [sortedLons[1], sortedLats[1]]
+      ];
+    }
 
 
     /**
     * Add a marker to the map for every store listing.
     **/
+  
+
     function addMarkers() {
-    /* For each feature in the GeoJSON object above: */
-    stores.forEach(function (marker) {
-    /* Create a div element for the marker. */
-    var el = document.createElement('div');
-    /* Assign a unique `id` to the marker. */
-    el.id = 'marker-' + marker.id;
-    /* Assign the `marker` class to each marker for styling. */
-    el.className = 'marker';
+      /* For each feature in the GeoJSON object above: */
+      stores.forEach(function (marker) {
+        var dist = marker.distance;
+      // if(dist<10)
+        {
+          /* Create a div element for the marker. */
+          var el = document.createElement('div');
+          /* Assign a unique `id` to the marker. */
+          el.id = 'marker-' + marker.id;
+          /* Assign the `marker` class to each marker for styling. */
+          el.className = 'marker';
 
-    /**
-    * Create a marker using the div element
-    * defined above and add it to the map.
-    **/
-    new mapboxgl.Marker(el, { offset: [0, -23] })
-    .setLngLat([marker.longitude,marker.latitude])
-    .addTo(map);
+          /**
+          * Create a marker using the div element
+          * defined above and add it to the map.
+          **/
+          new mapboxgl.Marker(el, { offset: [0, -23] })
+            .setLngLat([marker.longitude, marker.latitude])
+            .addTo(map);
 
-    /**
-    * Listen to the element and when it is clicked, do three things:
-    * 1. Fly to the point
-    * 2. Close all other popups and display popup for clicked store
-    * 3. Highlight listing in sidebar (and remove highlight for all other listings)
-    **/
-    el.addEventListener('click', function (e) {
-    /* Fly to the point */
-    console.log(marker);
-    flyToStore(marker);
-    setParkingObj(marker);
-    /* Close all other popups and display popup for clicked store */
-    createPopUp(marker);
-    /* Highlight listing in sidebar */
-    var activeItem = document.getElementsByClassName('active');
-    e.stopPropagation();
-    if (activeItem[0]) {
-    activeItem[0].classList.remove('active');
-    }
-    var listing = document.getElementById(
-    'listing-' + marker.id
-    );
-    listing.classList.add('active');
-    });
-    });
-    }
-
+          /**
+          * Listen to the element and when it is clicked, do three things:
+          * 1. Fly to the point
+          * 2. Close all other popups and display popup for clicked store
+          * 3. Highlight listing in sidebar (and remove highlight for all other listings)
+          **/
+          el.addEventListener('click', function (e) {
+            /* Fly to the point */
+            console.log(marker);
+            flyToStore(marker);
+            setParkingObj(marker);
+            /* Close all other popups and display popup for clicked store */
+            createPopUp(marker);
+            /* Highlight listing in sidebar */
+            var activeItem = document.getElementsByClassName('active');
+            e.stopPropagation();
+            if (activeItem[0]) {
+              activeItem[0].classList.remove('active');
+            }
+            var listing = document.getElementById(
+              'listing-' + marker.id
+            );
+            listing.classList.add('active');
+          });
+        }
+        });
+      }
     /**
     * Add a listing for each store to the sidebar.
     **/
@@ -304,7 +308,7 @@ const SearchPage = () => {
     link.id = 'link-' + i;
 
     var roundedDistance = Math.round(prop.distance * 100) / 100;
-    if(roundedDistance < 20){
+    if(roundedDistance < 10){
       
     link.innerHTML = prop.title;
 
@@ -369,23 +373,26 @@ const SearchPage = () => {
     * Create a Mapbox GL JS `Popup`.
     **/
     function createPopUp(currentFeature) {
-    var popUps = document.getElementsByClassName('mapboxgl-popup');
-    if (popUps[0]) popUps[0].remove();
-    var popup = new mapboxgl.Popup({ closeOnClick: false })
-    .setLngLat([currentFeature.longitude, currentFeature.latitude])
-    .setHTML(
-      // <>
-      //   <h3>sai</h3>
-      // </>
-      '<h3>' + currentFeature.location+'</h3>' +
-    '<h4>' +
-    currentFeature.content+
-    '</h4>' +
-    '<h4><strong>' + 'Rs. ' +
-    currentFeature.price +
-    '</strong></h4>'
-    )
-    .addTo(map);
+    if(currentFeature.distance<10)
+      {
+      var popUps = document.getElementsByClassName('mapboxgl-popup');
+      if (popUps[0]) popUps[0].remove();
+      var popup = new mapboxgl.Popup({ closeOnClick: false })
+        .setLngLat([currentFeature.longitude, currentFeature.latitude])
+        .setHTML(
+          // <>
+          //   <h3>sai</h3>
+          // </>
+          '<h3>' + currentFeature.location + '</h3>' +
+          '<h4>' +
+          currentFeature.content +
+          '</h4>' +
+          '<h4><strong>' + 'Rs. ' +
+          currentFeature.price +
+          '</strong></h4>'
+        )
+        .addTo(map);
+    }
     }
 
     // function resetCenter()
@@ -418,25 +425,6 @@ const SearchPage = () => {
       {parkingObj ? <Button id="BookBtn"
           onClick={handleSubmit}
         >Book</Button>:<></>}
-      {/* <div className="d-flex pb-4">
-      <RangePicker
-        onChange={(value, dateString) => setDate(dateString)}
-        disabledDate={(current) =>
-          current && current.valueOf() < moment().subtract(1, "days")
-        }
-          style={{marginLeft:540}}
-        className="w-40"
-        />
-        {<><Button id="BookBtn"
-          onClick={handleSubmit}
-          style={{marginRight:540,marginTop:35}}
-        >Search</Button></>}
-       {/* <SearchOutlined
-        onClick={handleSubmit}
-          className="btn btn-primary p-3 btn-square"
-          style={{marginRight:540}}
-        className="w-40"
-        /> */}
   </div>
   );
   };
