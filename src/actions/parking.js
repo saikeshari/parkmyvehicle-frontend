@@ -18,3 +18,9 @@ export const sellerSpots = async (token) =>
   });
   export const searchListings = async (query) =>
   await axios.post(`${process.env.REACT_APP_API}/search-listings`, query);
+
+  export const updateSpot = async (data, spotId) =>
+  await axios.put(
+    `${process.env.REACT_APP_API}/update-spot/${spotId}`,
+    data
+  );

@@ -1,11 +1,17 @@
 import React, {useEffect} from 'react';
 import './paymentPage.css';
 import $, {onClick} from 'jquery';
+import { updateSpot } from '../actions/parking'
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { Button } from 'react-bootstrap';
 
 function PaymentPage(props) {
-
+     const { auth } = useSelector((state) => ({ ...state }));
+  const { token } = auth;
+    console.log("PAYMENT PAGE PROPS",props);
     useEffect(() => {
-        console.log(props.location.state)
+        console.log("PAYMENT PAGE+++++",props.location)
         $(document).ready(function(){
             //Menu Toggle Script
             $("#menu-toggle").click(function(e) {
@@ -35,6 +41,20 @@ function PaymentPage(props) {
             })
     })
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            console.log(token, props.location.state.parkingObj, props.location.state.parkingObj._id);
+      let res = await updateSpot(props.location.state.parkingObj,props.location.state.parkingObj._id);
+      console.log("Spot UPDATE RES", res);
+    //   toast.success(`${res.data.title} is updated`);
+    } catch (err) {
+      console.log(err);
+    //   toast.error(err.response.data.err);
+    }
+    };
+    
     return (
         <>
             <div className="container-fluid px-0" id="bg-div">
@@ -73,7 +93,8 @@ function PaymentPage(props) {
                                 </div>
                                 <div className="row justify-content-right">
                                     <div className="col-12">
-                                        <p className="mb-0 mr-4 text-right">Pay <span className="top-highlight">$ 100</span> </p>
+                                                    <p className="mb-0 mr-4 text-right">Pay <span className="top-highlight">
+                                                         Rs 100</span> </p>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +108,7 @@ function PaymentPage(props) {
                                     <div className="col-11">
                                         <div className="form-card">
                                             <h3 className="mt-0 mb-4 text-center">Enter bank details to pay</h3>
-                                            <form onsubmit="event.preventDefault()">
+                                            <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-12">
                                                         <div className="input-group"> <input type="text" id="bk_nm" placeholder="BBB Bank"/> <label>BANK NAME</label> </div>
@@ -98,7 +119,7 @@ function PaymentPage(props) {
                                                         <div className="input-group"> <input type="text" name="ben_nm" id="ben-nm" placeholder="John Smith"/> <label>BENEFICIARY NAME</label> </div>
                                                     </div>
                                                     <div className="col-12">
-                                                        <div className="input-group"> <input type="text" name="scode" placeholder="ABCDAB1S" className="placeicon" minlength="8" maxlength="11"/> <label>SWIFT CODE</label> </div>
+                                                        <div className="input-group"> <input type="text" name="scode" placeholder="ABCDAB1S" className="placeicon" minLength="8" maxLength="11"/> <label>SWIFT CODE</label> </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
@@ -119,22 +140,25 @@ function PaymentPage(props) {
                                     <div className="col-11">
                                         <div className="form-card">
                                             <h3 className="mt-0 mb-4 text-center">Enter your card details to pay</h3>
-                                            <form onsubmit="event.preventDefault()">
+                                            <form onSubmit={handleSubmit}>
                                                 <div className="row">
                                                     <div className="col-12">
-                                                        <div className="input-group"> <input type="text" id="cr_no" placeholder="0000 0000 0000 0000" minlength="19" maxlength="19"/> <label>CARD NUMBER</label> </div>
+                                                        <div className="input-group"> <input type="text" id="cr_no" placeholder="0000 0000 0000 0000" minLength="19" maxLength="19"/> <label>CARD NUMBER</label> </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-6">
-                                                        <div className="input-group"> <input type="text" name="exp" id="exp" placeholder="MM/YY" minlength="5" maxlength="5"/> <label>CARD EXPIRY</label> </div>
+                                                        <div className="input-group"> <input type="text" name="exp" id="exp" placeholder="MM/YY" minLength="5" maxlength="5"/> <label>CARD EXPIRY</label> </div>
                                                     </div>
                                                     <div className="col-6">
-                                                        <div className="input-group"> <input type="password" name="cvcpwd" placeholder="&#9679;&#9679;&#9679;" className="placeicon" minlength="3" maxlength="3"/> <label>CVV</label> </div>
+                                                        <div className="input-group"> <input type="password" name="cvcpwd" placeholder="&#9679;&#9679;&#9679;" className="placeicon" minLength="3" maxLength="3"/> <label>CVV</label> </div>
                                                     </div>
                                                 </div>
                                                 <div className="row">
-                                                    <div className="col-md-12"> <input type="submit" value="Pay $ 100" className="btn btn-success placeicon"/> </div>
+                                                                <div className="col-md-12">
+                                                                    <input type="submit"
+                                                                        value="Pay Rs 100" className="btn btn-success placeicon" />
+                                                                         </div>
                                                 </div>
                                                 <div className="row">
                                                     <div className="col-md-12">
