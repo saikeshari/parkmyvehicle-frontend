@@ -5,8 +5,10 @@ import { updateSpot } from '../actions/parking'
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 
 function PaymentPage(props) {
+     const history = useHistory(); 
      const { auth } = useSelector((state) => ({ ...state }));
   const { token } = auth;
     console.log("PAYMENT PAGE PROPS",props);
@@ -41,18 +43,19 @@ function PaymentPage(props) {
             })
     })
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        
         try {
             console.log(token, props.location.state.parkingObj, props.location.state.parkingObj._id);
-      let res = await updateSpot(props.location.state.parkingObj,props.location.state.parkingObj._id);
-      console.log("Spot UPDATE RES", res);
+            let res = updateSpot(props.location.state.parkingObj, props.location.state.parkingObj._id);
+            console.log("Spot UPDATE RES", res);
     //   toast.success(`${res.data.title} is updated`);
     } catch (err) {
       console.log(err);
     //   toast.error(err.response.data.err);
-    }
+        }
+         toast.success("BOOKING SUCCESSFUL");
+            history.push('/');
     };
     
     return (
