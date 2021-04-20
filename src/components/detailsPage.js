@@ -30,7 +30,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '95vh',
+    height: '90vh',
   },
   image: {
     backgroundRepeat: 'no-repeat',
@@ -95,10 +95,10 @@ const Details = (props) => {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
-      <Grid item xs={false} sm={4} md={7} className={classes.image} >
-        <img src={`${process.env.REACT_APP_API}/spot/image/${parkingObj._id}`} />
+      <Grid item xs={false} sm={4} md={6} className={classes.image} >
+        <img src={`${process.env.REACT_APP_API}/spot/image/${parkingObj._id}`} style={{height:'90vh'}}/>
         </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={8} md={6} component={Paper} elevation={6} square>
       <Card style={{border:'none',marginTop:'4rem' }}>
         <Card.Body>
 
